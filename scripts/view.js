@@ -36,6 +36,15 @@ export function displayMovieCard (dataArray, target, cardPerPage, currentPage) {
   })
 }
 
+export function displayEmptyMessage (message, target) {
+  target.innerHTML = ''
+  target.insertAdjacentHTML('afterbegin', `
+  <div class="w-100 d-flex justify-content-center align-items-center">
+    <p class="my-3">${message}</p>
+  </div>
+  `)
+}
+
 export function displayMovieModal (movieDetailObject, target) {
   target.innerHTML = `
   <div class="modal-dialog">
