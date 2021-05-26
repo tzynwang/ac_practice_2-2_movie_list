@@ -1,6 +1,6 @@
-import * as controller from './_controller.js'
-import * as view from './_view.js'
-import * as main from './_main.js'
+import * as controller from './controller.js'
+import * as view from './view.js'
+import * as main from './main.js'
 
 loadPageContents()
 main.elementObject.movieCardsSection.addEventListener('click', movieCardInteract)
