@@ -94,11 +94,3 @@ export function updatePaginationActivePage (event) {
   document.querySelector('.page-item.active').classList.toggle('active')
   event.target.parentElement.classList.toggle('active')
 }
-
-export function scrollTo (x, y) {
-  window.scrollTo(x, y)
-}
-
-export function toggleClass (cssClass, target) {
-  target.classList.toggle(cssClass)
-}
