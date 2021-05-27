@@ -8,7 +8,7 @@ export function displayLoadingSpin (target) {
   </div>`
 }
 
-export function displayMovieCard (dataArray, target, cardPerPage, currentPage) {
+export function displayMovieCard (dataArray, target, cardPerPage, currentPage, highlight = false, keyword) {
   target.innerHTML = ''
   const sliceArray = dataArray.slice(cardPerPage * (currentPage - 1), cardPerPage * currentPage)
   sliceArray.forEach(data => {
@@ -16,11 +16,15 @@ export function displayMovieCard (dataArray, target, cardPerPage, currentPage) {
     data.favorite === true
       ? favoriteIconClass = 'bi bi-star-fill'
       : favoriteIconClass = 'bi bi-star'
+    let movieTitle
+    highlight === true
+      ? movieTitle = highlightText(data.title, keyword)
+      : movieTitle = data.title
     target.innerHTML += `
     <div class="col">
       <div class="card h-100 justify-content-between">
         <img src="https://raw.githubusercontent.com/ALPHACamp/movie-list-api/master/public/posters/${data.image}" class="card-img-top" alt="movie poster">
-        <p class="card-title h5 m-3">${data.title}</p>
+        <p class="card-title h5 m-3">${movieTitle}</p>
         <div class="card-body d-flex align-items-end">
           <button type="button" class="btn btn-primary" data-class="detail" data-id="${data.id}"
           data-bs-toggle="modal" data-bs-target="#movieModal">
@@ -93,4 +97,19 @@ export function toggleFavoriteIcon (event) {
 export function updatePaginationActivePage (event) {
   document.querySelector('.page-item.active').classList.toggle('active')
   event.target.parentElement.classList.toggle('active')
+}
+
+export function displaySearchMessage (message, target) {
+  target.insertAdjacentHTML('afterbegin', `
+  <div class="w-100 d-flex align-items-center">
+    <p class="my-3">${message}</p>
+  </div>
+  `)
+}
+
+export function highlightText (movieTitle, keyword) {
+  const regex = new RegExp(keyword, 'i')
+  const index = movieTitle.toLowerCase().indexOf(keyword)
+  const originTitleString = movieTitle.slice(index, index + keyword.length)
+  return movieTitle.replace(regex, `<span class="highlight">${originTitleString}</span>`)
 }

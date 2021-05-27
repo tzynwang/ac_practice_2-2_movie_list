@@ -64,21 +64,25 @@ export function paginationInteract (event, status) {
       view.displayMovieCard(controller.filterFavoriteMovies(retrieveAllMovies), main.elementObject.movieCardsSection, main.config.cardPerPage, pageNumber)
       break
     case 'search':
-      view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, pageNumber)
+      view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, pageNumber, true, main.templateData.userInput)
   }
   window.scrollTo(0, 0)
 }
 
 export function searchMovieByTitle (userInput) {
   controller.updatePageStatus('search')
-  if (!utility.isEmptyString(userInput)) {
-    main.elementObject.searchInput.classList.remove('is-invalid')
-    main.templateData.searchResult = controller.returnSearchMovies(userInput, controller.retrieveFromLocalStorage('allMovies'))
-    main.templateData.searchResult.length === 0
-      ? view.displayEmptyMessage(`No matching results of ${userInput} 😣`, main.elementObject.movieCardsSection)
-      : view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, 1)
-    view.displayPagination(main.templateData.searchResult, main.elementObject.pagination, main.config.cardPerPage)
-  } else {
+  if (utility.isEmptyString(userInput)) {
     main.elementObject.searchInput.classList.add('is-invalid')
+    return
   }
+  main.templateData.userInput = userInput
+  main.elementObject.searchInput.classList.remove('is-invalid')
+  main.templateData.searchResult = controller.returnSearchMovies(main.templateData.userInput, controller.retrieveFromLocalStorage('allMovies'))
+  if (main.templateData.searchResult.length === 0) {
+    view.displayEmptyMessage(`No matching results of ${main.templateData.userInput} 😣`, main.elementObject.movieCardsSection)
+  } else {
+    view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, 1, true, main.templateData.userInput)
+    view.displaySearchMessage(`Search results of "${main.templateData.userInput}": `, main.elementObject.movieCardsSection)
+  }
+  view.displayPagination(main.templateData.searchResult, main.elementObject.pagination, main.config.cardPerPage)
 }
