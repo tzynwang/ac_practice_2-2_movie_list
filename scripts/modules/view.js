@@ -69,6 +69,7 @@ export function displayMovieModal (movieDetailObject, target) {
 }
 
 export function displayPagination (dataArray, target, cardPerPage) {
+  target.innerHTML = ''
   const paginationLength = Math.ceil(dataArray.length / cardPerPage)
   for (let i = 1; i <= paginationLength; i++) {
     i === 1
@@ -96,4 +97,8 @@ export function updatePaginationActivePage (event) {
 
 export function scrollTo (x, y) {
   window.scrollTo(x, y)
+}
+
+export function toggleClass (cssClass, target) {
+  target.classList.toggle(cssClass)
 }
