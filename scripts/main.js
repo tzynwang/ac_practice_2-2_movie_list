@@ -14,5 +14,6 @@ export const config = {
 }
 
 export const templateData = {
+  userInput: undefined,
   searchResult: undefined
 }
