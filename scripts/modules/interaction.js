@@ -1,8 +1,10 @@
 import * as controller from './controller.js'
 import * as view from './view.js'
 import * as main from '../main.js'
+import * as utility from './utilities.js'
 
 export async function loadIndexPageContents (milliseconds) {
+  controller.updatePageStatus('index')
   view.displayLoadingSpin(main.elementObject.movieCardsSection)
   let retrieveAllMovies = controller.retrieveFromLocalStorage('allMovies')
   // only fetch when localStorage key 'allMovies' has no value
@@ -20,6 +22,7 @@ export async function loadIndexPageContents (milliseconds) {
 }
 
 export function loadFavoritePageContents (milliseconds) {
+  controller.updatePageStatus('favorite')
   view.displayLoadingSpin(main.elementObject.movieCardsSection)
   const allMovies = controller.retrieveFromLocalStorage('allMovies')
   const favoriteMovies = controller.filterFavoriteMovies(allMovies)
@@ -47,18 +50,35 @@ export async function movieCardInteract (event) {
   }
 }
 
-export function paginationInteract (event, page) {
+export function paginationInteract (event, status) {
   const pageNumber = Number(event.target.innerText)
   if (isNaN(pageNumber)) return
 
   view.updatePaginationActivePage(event)
   const retrieveAllMovies = controller.retrieveFromLocalStorage('allMovies')
-  switch (page) {
+  switch (status) {
     case 'index':
       view.displayMovieCard(retrieveAllMovies, main.elementObject.movieCardsSection, main.config.cardPerPage, pageNumber)
       break
     case 'favorite':
       view.displayMovieCard(controller.filterFavoriteMovies(retrieveAllMovies), main.elementObject.movieCardsSection, main.config.cardPerPage, pageNumber)
+      break
+    case 'search':
+      view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, pageNumber)
   }
-  view.scrollTo(0, 0)
+  window.scrollTo(0, 0)
+}
+
+export function searchMovieByTitle (userInput) {
+  controller.updatePageStatus('search')
+  if (!utility.isEmptyString(userInput)) {
+    main.elementObject.searchInput.classList.remove('is-invalid')
+    main.templateData.searchResult = controller.returnSearchMovies(userInput, controller.retrieveFromLocalStorage('allMovies'))
+    main.templateData.searchResult.length === 0
+      ? view.displayEmptyMessage(`No matching results of ${userInput} 😣`, main.elementObject.movieCardsSection)
+      : view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, 1)
+    view.displayPagination(main.templateData.searchResult, main.elementObject.pagination, main.config.cardPerPage)
+  } else {
+    main.elementObject.searchInput.classList.add('is-invalid')
+  }
 }
