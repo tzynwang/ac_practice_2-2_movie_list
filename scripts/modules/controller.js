@@ -1,3 +1,9 @@
+import * as main from '../main.js'
+
+export function updatePageStatus (status) {
+  main.config.pageStatus = status
+}
+
 export async function fetchData (url) {
   try {
     const response = await axios.get(url)
@@ -43,4 +49,9 @@ export function addToFavorite (event, localStorageKey) {
 
 export function filterFavoriteMovies (dataArray) {
   return dataArray.filter(movie => movie.favorite === true)
+}
+
+export function returnSearchMovies (input, dataArray) {
+  const searchKeyword = input.trim().toLowerCase()
+  return dataArray.filter(data => data.title.toLowerCase().includes(searchKeyword))
 }
