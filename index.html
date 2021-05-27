@@ -36,9 +36,12 @@
   <main class="container">
     <!-- Search bar -->
     <section class="row my-3">
-      <div class="input-group">
-        <span class="input-group-text" id="basic-addon3">Search movies:</span>
-        <input type="text" class="form-control" id="search" aria-describedby="movie search bar" placeholder="give me a movie title 😎" autocomplete="off">
+      <div class="input-group has-validation">
+        <span class="input-group-text" id="movieSearchBar">Search movies:</span>
+        <input type="text" class="form-control" id="search" aria-describedby="movieSearchBar" placeholder="give me a movie title 😎" autocomplete="off">
+        <div class="invalid-feedback mb-1">
+          Please enter at least one character.
+        </div>
         <button class="btn btn-primary" type="button" id="searchButton">Search</button>
       </div>
     </section>
