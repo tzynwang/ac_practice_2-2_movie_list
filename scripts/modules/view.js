@@ -1,3 +1,5 @@
+import * as main from '../main.js'
+
 export function displayLoadingSpin (target) {
   target.innerHTML = `
   <div class="w-100 d-flex justify-content-center align-items-center">
@@ -49,7 +51,16 @@ export function displayEmptyMessage (message, target) {
   `)
 }
 
+function getGenresBadges (movieDetailObject, genresMap) {
+  let badges = ''
+  movieDetailObject.genres.forEach(genre => {
+    badges += `<span class="badge bg-warning text-dark me-1">${genresMap[genre]}</span>`
+  })
+  return badges
+}
+
 export function displayMovieModal (movieDetailObject, target) {
+  const badges = getGenresBadges(movieDetailObject, main.templateData.movieGenres)
   target.innerHTML = `
   <div class="modal-dialog">
     <div class="modal-content">
@@ -57,12 +68,21 @@ export function displayMovieModal (movieDetailObject, target) {
         <p class="modal-title h5" id="movieModalLabel">${movieDetailObject.title}</p>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body row">
-        <div class="col">
-          <img src="https://raw.githubusercontent.com/ALPHACamp/movie-list-api/master/public/posters/${movieDetailObject.image}" class="w-100" alt="movie poster">
+      <div class="modal-body">
+        <div class="row row-movie-information mb-3">
+          <div class="col">
+            <img src="https://raw.githubusercontent.com/ALPHACamp/movie-list-api/master/public/posters/${movieDetailObject.image}" class="w-100" alt="movie poster">
+          </div>
+          <div class="col col-poster">
+            <p>${movieDetailObject.description}</p>
+          </div>
         </div>
-        <div class="col col-poster">
-          <p>${movieDetailObject.description}</p>
+        <div class="row mb-1">
+          <div class="col">${badges}</div>
+        </div>
+        <div class="row justify-content-between">
+          <div class="col-auto">Director: ${movieDetailObject.director}</div>
+          <div class="col-auto">Release date: ${movieDetailObject.release_date}</div>
         </div>
       </div>
       <div class="modal-footer">

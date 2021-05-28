@@ -1,8 +1,8 @@
-.modal-body.row {
-  height: 400px;
+.modal-body .row-movie-information {
+  height: 330px;
 }
 
-.modal-body.row .col-poster {
+.modal-body .row-movie-information .col-poster {
   height: 100%;
   overflow-y: auto;
 }
