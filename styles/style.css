@@ -11,3 +11,11 @@
   background-color: #ffc107;
   color: #790000;
 }
+
+#pagination li:hover {
+  cursor: default;
+}
+
+#pagination li:not(.active):hover {
+  cursor: pointer;
+}
