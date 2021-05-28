@@ -82,7 +82,7 @@ export function displayMovieModal (movieDetailObject, target) {
         </div>
         <div class="row justify-content-between">
           <div class="col-auto">Director: ${movieDetailObject.director}</div>
-          <div class="col-auto">Release date: ${movieDetailObject.release_date}</div>
+          <div class="col">Release date: ${movieDetailObject.release_date}</div>
         </div>
       </div>
       <div class="modal-footer">
@@ -119,7 +119,7 @@ export function updatePaginationActivePage (event) {
   event.target.parentElement.classList.toggle('active')
 }
 
-export function highlightText (movieTitle, keyword) {
+function highlightText (movieTitle, keyword) {
   const regex = new RegExp(keyword, 'i')
   const index = movieTitle.toLowerCase().indexOf(keyword)
   const originTitleString = movieTitle.slice(index, index + keyword.length)
