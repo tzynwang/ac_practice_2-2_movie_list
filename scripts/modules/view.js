@@ -61,7 +61,7 @@ export function displayMovieModal (movieDetailObject, target) {
         <div class="col">
           <img src="https://raw.githubusercontent.com/ALPHACamp/movie-list-api/master/public/posters/${movieDetailObject.image}" class="w-100" alt="movie poster">
         </div>
-        <div class="col">
+        <div class="col col-poster">
           <p>${movieDetailObject.description}</p>
         </div>
       </div>
