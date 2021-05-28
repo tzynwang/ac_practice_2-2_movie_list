@@ -70,14 +70,20 @@ export function paginationInteract (event, status) {
 }
 
 export function searchMovieByTitle (userInput) {
-  controller.updatePageStatus('search')
   if (utility.isEmptyString(userInput)) {
     main.elementObject.searchInput.classList.add('is-invalid')
     return
   }
+
+  controller.updatePageStatus('search')
+  main.elementObject.searchButton.insertAdjacentHTML('beforebegin', `
+    <button class="btn btn-warning" type="button" id="clearButton">Clear search result</button>
+    `)
+  document.querySelector('#clearButton').addEventListener('click', clearSearchResult)
   main.templateData.userInput = userInput
   main.elementObject.searchInput.classList.remove('is-invalid')
   main.templateData.searchResult = controller.returnSearchMovies(main.templateData.userInput, controller.retrieveFromLocalStorage('allMovies'))
+
   if (main.templateData.searchResult.length === 0) {
     view.displayEmptyMessage(`No matching results of ${main.templateData.userInput} 😣`, main.elementObject.movieCardsSection)
   } else {
@@ -85,4 +91,11 @@ export function searchMovieByTitle (userInput) {
     main.elementObject.searchMessage.textContent = `Search results of "${main.templateData.userInput}":`
   }
   view.displayPagination(main.templateData.searchResult, main.elementObject.pagination, main.config.cardPerPage)
+}
+
+function clearSearchResult () {
+  main.elementObject.searchInput.value = ''
+  main.elementObject.searchMessage.textContent = ''
+  document.querySelector('#clearButton').remove()
+  loadIndexPageContents(250)
 }
