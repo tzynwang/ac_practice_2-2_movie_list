@@ -13,6 +13,7 @@ export async function loadIndexPageContents (milliseconds) {
     controller.saveToLocalStorage('allMovies', allMovies)
     retrieveAllMovies = controller.retrieveFromLocalStorage('allMovies')
   }
+  view.displayFilterBadges(main.elementObject.filter, main.templateData.movieGenres)
   setTimeout(() => {
     view.displayMovieCard(
       retrieveAllMovies, main.elementObject.movieCardsSection, main.config.cardPerPage, main.config.startPage

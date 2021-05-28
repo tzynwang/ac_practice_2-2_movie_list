@@ -10,6 +10,17 @@ export function displayLoadingSpin (target) {
   </div>`
 }
 
+export function displayFilterBadges (target, genresObject) {
+  const allGenresArray = Object.values(genresObject)
+  allGenresArray.forEach(genre => {
+    target.insertAdjacentHTML('beforeend', `
+    <span class="badge bg-warning text-dark m-1">
+      <input class="form-check-input" type="checkbox" id="${genre}Input" value="${genre}">
+      <label class="form-check-label ms-1" for="${genre}Input">${genre}</label>
+    </span>`)
+  })
+}
+
 export function displayMovieCard (dataArray, target, cardPerPage, currentPage, highlight = false, keyword) {
   target.innerHTML = ''
   const sliceArray = dataArray.slice(cardPerPage * (currentPage - 1), cardPerPage * currentPage)
@@ -82,7 +93,7 @@ export function displayMovieModal (movieDetailObject, target) {
         </div>
         <div class="row justify-content-between">
           <div class="col-auto">Director: ${movieDetailObject.director}</div>
-          <div class="col">Release date: ${movieDetailObject.release_date}</div>
+          <div class="col-auto">Release date: ${movieDetailObject.release_date}</div>
         </div>
       </div>
       <div class="modal-footer">

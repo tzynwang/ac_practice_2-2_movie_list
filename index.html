@@ -37,7 +37,7 @@
   <main class="container">
     <!-- Search bar -->
     <section class="row my-3">
-      <div class="input-group has-validation mb-3">
+      <div class="input-group has-validation">
         <span class="input-group-text" id="movieSearchBar">Search movies:</span>
         <input type="text" class="form-control" id="search" aria-describedby="movieSearchBar" placeholder="give me a movie title 😎" autocomplete="off">
         <div class="invalid-feedback mb-1">
@@ -46,6 +46,22 @@
         <button class="btn btn-primary" type="button" id="searchButton">Search</button>
       </div>
       <div id="searchMessage">
+      </div>
+    </section>
+    <!-- Filter function -->
+    <section class="accordion accordion-flush mb-3" id="accordion">
+      <div class="accordion-item">
+        <p class="h2 accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#movieGenres"
+            aria-expanded="false" aria-controls="movieGenres">
+            <i class="bi bi-filter"></i><span class="ms-2">Movie genres:</span>
+          </button>
+        </p>
+        <div id="movieGenres" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordion">
+          <div class="accordion-body">
+          </div>
+        </div>
       </div>
     </section>
     <!-- Movie cards -->
