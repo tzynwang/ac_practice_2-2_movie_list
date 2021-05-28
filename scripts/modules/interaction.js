@@ -82,7 +82,7 @@ export function searchMovieByTitle (userInput) {
     view.displayEmptyMessage(`No matching results of ${main.templateData.userInput} 😣`, main.elementObject.movieCardsSection)
   } else {
     view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, 1, true, main.templateData.userInput)
-    view.displaySearchMessage(`Search results of "${main.templateData.userInput}": `, main.elementObject.movieCardsSection)
+    main.elementObject.searchMessage.textContent = `Search results of "${main.templateData.userInput}":`
   }
   view.displayPagination(main.templateData.searchResult, main.elementObject.pagination, main.config.cardPerPage)
 }

@@ -99,14 +99,6 @@ export function updatePaginationActivePage (event) {
   event.target.parentElement.classList.toggle('active')
 }
 
-export function displaySearchMessage (message, target) {
-  target.insertAdjacentHTML('afterbegin', `
-  <div class="w-100 d-flex align-items-center">
-    <p class="my-3">${message}</p>
-  </div>
-  `)
-}
-
 export function highlightText (movieTitle, keyword) {
   const regex = new RegExp(keyword, 'i')
   const index = movieTitle.toLowerCase().indexOf(keyword)
