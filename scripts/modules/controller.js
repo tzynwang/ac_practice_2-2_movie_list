@@ -55,3 +55,9 @@ export function returnSearchMovies (input, dataArray) {
   const searchKeyword = input.trim().toLowerCase()
   return dataArray.filter(data => data.title.toLowerCase().includes(searchKeyword))
 }
+
+export function uncheckedAllOptions (nodes) {
+  nodes.forEach(node => {
+    node.checked = false
+  })
+}

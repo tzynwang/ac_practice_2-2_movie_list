@@ -16,3 +16,5 @@ main.elementObject.searchButton.addEventListener('click', () => {
 main.elementObject.searchInput.addEventListener('keypress', event => {
   if (event.keyCode === 13) main.elementObject.searchButton.click()
 })
+
+main.elementObject.filter.addEventListener('change', interaction.filterMovies)

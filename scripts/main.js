@@ -2,6 +2,7 @@ export const elementObject = {
   searchInput: document.querySelector('#search'),
   searchButton: document.querySelector('#searchButton'),
   searchMessage: document.querySelector('#searchMessage'),
+  filterContainer: document.querySelector('#accordion'),
   filter: document.querySelector('#movieGenres .accordion-body'),
   movieCardsSection: document.querySelector('#movieCards'),
   movieModal: document.querySelector('#movieModal'),

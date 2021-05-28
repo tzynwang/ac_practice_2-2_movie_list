@@ -11,12 +11,13 @@ export function displayLoadingSpin (target) {
 }
 
 export function displayFilterBadges (target, genresObject) {
-  const allGenresArray = Object.values(genresObject)
+  target.innerHTML = ''
+  const allGenresArray = Object.entries(genresObject)
   allGenresArray.forEach(genre => {
     target.insertAdjacentHTML('beforeend', `
     <span class="badge bg-warning text-dark m-1">
-      <input class="form-check-input" type="checkbox" id="${genre}Input" value="${genre}">
-      <label class="form-check-label ms-1" for="${genre}Input">${genre}</label>
+      <input class="form-check-input" type="checkbox" id="${genre[1]}Input" value="${genre[0]}">
+      <label class="form-check-label ms-1" for="${genre[1]}Input">${genre[1]}</label>
     </span>`)
   })
 }
@@ -135,4 +136,14 @@ function highlightText (movieTitle, keyword) {
   const index = movieTitle.toLowerCase().indexOf(keyword)
   const originTitleString = movieTitle.slice(index, index + keyword.length)
   return movieTitle.replace(regex, `<span class="highlight">${originTitleString}</span>`)
+}
+
+export function collapseAccordion () {
+  const accordionButton = document.querySelector('button.accordion-button')
+  accordionButton.setAttribute('aria-expanded', false)
+  if (!accordionButton.classList.contains('collapsed')) {
+    accordionButton.classList.add('collapsed')
+  }
+  const movieGenres = document.querySelector('#movieGenres')
+  movieGenres.classList.remove('show')
 }
