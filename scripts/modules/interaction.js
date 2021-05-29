@@ -85,9 +85,12 @@ export function searchMovieByTitle (userInput) {
   view.collapseAccordion()
 
   controller.updatePageStatus('search')
-  main.elementObject.searchButton.insertAdjacentHTML('beforebegin', `
+  main.elementObject.searchInput.value = ''
+  if (!document.querySelector('#clearButton')) {
+    main.elementObject.searchButton.insertAdjacentHTML('beforebegin', `
     <button class="btn btn-warning" type="button" id="clearButton">Clear search result</button>
     `)
+  }
   document.querySelector('#clearButton').addEventListener('click', clearSearchResult)
   main.templateData.userInput = userInput
   main.elementObject.searchInput.classList.remove('is-invalid')
