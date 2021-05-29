@@ -101,6 +101,7 @@ export function searchMovieByTitle (userInput) {
     main.elementObject.searchMessage.textContent = `Search results of "${main.templateData.userInput}":`
   }
   view.displayPagination(main.templateData.searchResult, main.elementObject.pagination, main.config.cardPerPage)
+  window.scrollTo(0, 0)
 }
 
 function clearSearchResult () {
@@ -134,6 +135,7 @@ export function filterMovies () {
   })
   view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, 1)
   view.displayPagination(main.templateData.searchResult, main.elementObject.pagination, main.config.cardPerPage)
+  window.scrollTo(0, 0)
 }
 
 export function movieBadgeSectionAddEventListener () {
