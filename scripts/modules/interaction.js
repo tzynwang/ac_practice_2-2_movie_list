@@ -92,8 +92,8 @@ export function searchMovieByTitle (userInput) {
     `)
   }
   document.querySelector('#clearButton').addEventListener('click', clearSearchResult)
-  main.templateData.userInput = userInput
   main.elementObject.searchInput.classList.remove('is-invalid')
+  main.templateData.userInput = userInput
   main.templateData.searchResult = controller.returnSearchMovies(main.templateData.userInput, controller.retrieveFromLocalStorage('allMovies'))
 
   if (main.templateData.searchResult.length === 0) {
