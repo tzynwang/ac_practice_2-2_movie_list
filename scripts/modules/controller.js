@@ -6,8 +6,7 @@ export function updatePageStatus (status) {
 
 export async function fetchData (url) {
   try {
-    const response = await axios.get(url)
-    return response.data.results
+    return await axios.get(url)
   } catch (error) {
     console.error(error)
   }

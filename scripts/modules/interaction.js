@@ -10,7 +10,7 @@ export async function loadIndexPageContents (milliseconds) {
   // only fetch when localStorage key 'allMovies' has no value
   if (retrieveAllMovies === null) {
     const allMovies = await controller.fetchData(main.config.allMoviesApi)
-    controller.saveToLocalStorage('allMovies', allMovies)
+    controller.saveToLocalStorage('allMovies', allMovies.data.results)
     retrieveAllMovies = controller.retrieveFromLocalStorage('allMovies')
   }
   view.displayFilterBadges(main.elementObject.filter, main.templateData.movieGenres)
@@ -43,7 +43,7 @@ export async function movieCardInteraction (event) {
   if (event.target.dataset.class === 'detail') {
     const movieDetailApi = `${main.config.allMoviesApi}${event.target.dataset.id}`
     const movieDetailObject = await controller.fetchData(movieDetailApi)
-    view.displayMovieModal(movieDetailObject, main.elementObject.movieModal, main.config.pageStatus)
+    view.displayMovieModal(movieDetailObject.data.results, main.elementObject.movieModal, main.config.pageStatus)
   }
   if (event.target.dataset.class === 'favorite') {
     view.toggleFavoriteIcon(event)
