@@ -1,4 +1,4 @@
-import * as main from '../main.js'
+import * as main from '../generalData.js'
 
 export function updatePageStatus (status) {
   main.config.pageStatus = status

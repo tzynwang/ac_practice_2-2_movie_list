@@ -1,5 +1,5 @@
-import * as main from './main.js'
 import * as interaction from './modules/interaction.js'
+import * as main from './generalData.js'
 
 interaction.loadFavoritePageContents(300)
 
