@@ -74,7 +74,7 @@ function getGenresBadges (movieDetailObject, genresMap, pageStatus) {
       workingFilterBadgeClass = 'genres-filter btn btn-warning'
   }
   movieDetailObject.genres.forEach(genre => {
-    badges += `<span class="badge ${workingFilterBadgeClass} me-1">${genresMap[genre]}</span>`
+    badges += `<span class="badge ${workingFilterBadgeClass} text-dark me-1">${genresMap[genre]}</span>`
   })
   return badges
 }
