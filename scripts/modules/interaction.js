@@ -39,7 +39,7 @@ export function loadFavoritePageContents (milliseconds) {
   }, milliseconds)
 }
 
-export async function movieCardInteract (event) {
+export async function movieCardInteraction (event) {
   if (event.target.dataset.class === 'detail') {
     const movieDetailApi = `${main.config.allMoviesApi}${event.target.dataset.id}`
     const movieDetailObject = await controller.fetchData(movieDetailApi)
@@ -51,7 +51,7 @@ export async function movieCardInteract (event) {
   }
 }
 
-export function paginationInteract (event, status) {
+export function paginationInteraction (event, status) {
   const pageNumber = Number(event.target.innerText)
   if (isNaN(pageNumber)) return
 
@@ -141,7 +141,7 @@ export function filterMovies () {
   window.scrollTo(0, 0)
 }
 
-export function movieBadgeSectionAddEventListener () {
+export function AddEventListenerToMovieModalBadge () {
   const movieModalBadgesSection = document.querySelector('.row-genres-badges .col')
   movieModalBadgesSection.addEventListener('click', event => filterByMovieModalBadge(event))
 }

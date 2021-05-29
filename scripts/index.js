@@ -4,12 +4,12 @@ import * as main from './generalData.js'
 interaction.loadIndexPageContents(300)
 
 main.elementObject.movieCardsSection.addEventListener('click', async event => {
-  await interaction.movieCardInteract(event)
-  interaction.movieBadgeSectionAddEventListener()
+  await interaction.movieCardInteraction(event)
+  interaction.AddEventListenerToMovieModalBadge()
 })
 
 main.elementObject.pagination.addEventListener('click', event => {
-  interaction.paginationInteract(event, main.config.pageStatus)
+  interaction.paginationInteraction(event, main.config.pageStatus)
 })
 
 main.elementObject.searchButton.addEventListener('click', () => {
