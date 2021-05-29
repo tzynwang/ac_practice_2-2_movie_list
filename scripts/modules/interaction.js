@@ -143,10 +143,10 @@ export function filterMovies () {
 
 export function movieBadgeSectionAddEventListener () {
   const movieModalBadgesSection = document.querySelector('.row-genres-badges .col')
-  movieModalBadgesSection.addEventListener('click', event => movieModalBadgeFilter(event))
+  movieModalBadgesSection.addEventListener('click', event => filterByMovieModalBadge(event))
 }
 
-function movieModalBadgeFilter (event) {
+function filterByMovieModalBadge (event) {
   if (event.target.dataset.genre) {
     const genre = event.target.dataset.genre
     document.querySelector('.modal-header .btn-close').click()
