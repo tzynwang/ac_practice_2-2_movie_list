@@ -74,7 +74,10 @@ function getGenresBadges (movieDetailObject, genresMap, pageStatus) {
       workingFilterBadgeClass = 'genres-filter btn btn-warning'
   }
   movieDetailObject.genres.forEach(genre => {
-    badges += `<span class="badge ${workingFilterBadgeClass} text-dark me-1">${genresMap[genre]}</span>`
+    badges += `
+    <span class="badge ${workingFilterBadgeClass} text-dark me-1" data-genre="${genre}">
+      ${genresMap[genre]}
+    </span>`
   })
   return badges
 }
@@ -97,7 +100,7 @@ export function displayMovieModal (movieDetailObject, target, pageStatus) {
             <p>${movieDetailObject.description}</p>
           </div>
         </div>
-        <div class="row mb-1">
+        <div class="row row-genres-badges mb-1">
           <div class="col">${badges}</div>
         </div>
         <div class="row justify-content-between">
@@ -154,4 +157,14 @@ export function collapseAccordion () {
   }
   const movieGenres = document.querySelector('#movieGenres')
   movieGenres.classList.remove('show')
+}
+
+export function expendAccordion () {
+  const accordionButton = document.querySelector('button.accordion-button')
+  accordionButton.setAttribute('aria-expanded', true)
+  accordionButton.classList.remove('collapsed')
+  const movieGenres = document.querySelector('#movieGenres')
+  if (!movieGenres.classList.contains('show')) {
+    movieGenres.classList.add('show')
+  }
 }

@@ -135,3 +135,19 @@ export function filterMovies () {
   view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, 1)
   view.displayPagination(main.templateData.searchResult, main.elementObject.pagination, main.config.cardPerPage)
 }
+
+export function movieBadgeSectionAddEventListener () {
+  const movieModalBadgesSection = document.querySelector('.row-genres-badges .col')
+  movieModalBadgesSection.addEventListener('click', event => movieModalBadgeFilter(event))
+}
+
+function movieModalBadgeFilter (event) {
+  if (event.target.dataset.genre) {
+    const genre = event.target.dataset.genre
+    document.querySelector('.modal-header .btn-close').click()
+    // check genre accordingly
+    document.querySelector(`#accordion input[value="${genre}"]`).checked = true
+    filterMovies()
+    view.expendAccordion()
+  }
+}
