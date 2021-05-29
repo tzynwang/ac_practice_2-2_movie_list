@@ -43,7 +43,7 @@ export async function movieCardInteract (event) {
   if (event.target.dataset.class === 'detail') {
     const movieDetailApi = `${main.config.allMoviesApi}${event.target.dataset.id}`
     const movieDetailObject = await controller.fetchData(movieDetailApi)
-    view.displayMovieModal(movieDetailObject, main.elementObject.movieModal)
+    view.displayMovieModal(movieDetailObject, main.elementObject.movieModal, main.config.pageStatus)
   }
   if (event.target.dataset.class === 'favorite') {
     view.toggleFavoriteIcon(event)

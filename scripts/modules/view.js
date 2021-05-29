@@ -63,16 +63,24 @@ export function displayEmptyMessage (message, target) {
   `)
 }
 
-function getGenresBadges (movieDetailObject, genresMap) {
+function getGenresBadges (movieDetailObject, genresMap, pageStatus) {
   let badges = ''
+  let workingFilterBadgeClass
+  switch (pageStatus) {
+    case 'favorite':
+      workingFilterBadgeClass = 'bg-warning'
+      break
+    default:
+      workingFilterBadgeClass = 'genres-filter btn btn-warning'
+  }
   movieDetailObject.genres.forEach(genre => {
-    badges += `<span class="badge bg-warning text-dark me-1">${genresMap[genre]}</span>`
+    badges += `<span class="badge ${workingFilterBadgeClass} me-1">${genresMap[genre]}</span>`
   })
   return badges
 }
 
-export function displayMovieModal (movieDetailObject, target) {
-  const badges = getGenresBadges(movieDetailObject, main.templateData.movieGenres)
+export function displayMovieModal (movieDetailObject, target, pageStatus) {
+  const badges = getGenresBadges(movieDetailObject, main.templateData.movieGenres, pageStatus)
   target.innerHTML = `
   <div class="modal-dialog">
     <div class="modal-content">
