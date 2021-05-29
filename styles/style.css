@@ -7,6 +7,14 @@
   overflow-y: auto;
 }
 
+span.badge:hover {
+  cursor: default;
+}
+
+span.genres-filter:hover {
+  cursor: pointer;
+}
+
 .highlight {
   background-color: #ffc107;
   color: #790000;
