@@ -65,11 +65,11 @@ function getGenresBadges (movieDetailObject, genresMap, pageStatus) {
   let badges = ''
   let workingFilterBadgeClass
   switch (pageStatus) {
-    case 'favorite':
-      workingFilterBadgeClass = 'bg-warning'
+    case 'index':
+      workingFilterBadgeClass = 'genres-filter btn btn-warning'
       break
     default:
-      workingFilterBadgeClass = 'genres-filter btn btn-warning'
+      workingFilterBadgeClass = 'bg-warning'
   }
   movieDetailObject.genres.forEach(genre => {
     badges += `
