@@ -19,6 +19,8 @@ export const config = {
 export const templateData = {
   userInput: undefined,
   searchResult: undefined,
+  movieIdClicked: undefined,
+  movieModalDetail: undefined,
   movieGenres: {
     1: 'Action',
     2: 'Adventure',
