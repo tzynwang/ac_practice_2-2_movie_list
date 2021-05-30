@@ -45,14 +45,14 @@ export async function movieCardInteraction (event) {
     case 'detail': {
       const movieIdClicked = event.target.dataset.id
       if (main.templateData.movieIdClicked === movieIdClicked) {
-        view.displayMovieModal(main.templateData.movieModalDetail, main.elementObject.movieModal, main.config.pageStatus)
+        view.displayMovieModal(main.templateData.movieModalDetail, main.templateData.movieGenres, main.elementObject.movieModal, main.config.pageStatus)
         return
       } else {
         main.templateData.movieIdClicked = movieIdClicked
         view.displayEmptyMovieModal(main.elementObject.movieModal)
         const movieDetailApi = `${main.config.allMoviesApi}${event.target.dataset.id}`
         const movieDetailObject = await controller.fetchData(movieDetailApi)
-        view.displayMovieModal(movieDetailObject.data.results, main.elementObject.movieModal, main.config.pageStatus)
+        view.displayMovieModal(movieDetailObject.data.results, main.templateData.movieGenres, main.elementObject.movieModal, main.config.pageStatus)
         main.templateData.movieModalDetail = movieDetailObject.data.results
         return
       }

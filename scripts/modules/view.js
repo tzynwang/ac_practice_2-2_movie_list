@@ -1,5 +1,3 @@
-import * as main from '../generalData.js'
-
 export function displayLoadingSpin (target) {
   target.innerHTML = `
   <div class="w-100 d-flex justify-content-center align-items-center">
@@ -99,8 +97,8 @@ export function displayEmptyMovieModal (target) {
   </div>`
 }
 
-export function displayMovieModal (movieDetailObject, target, pageStatus) {
-  const badges = getGenresBadges(movieDetailObject, main.templateData.movieGenres, pageStatus)
+export function displayMovieModal (movieDetailObject, genresObject, target, pageStatus) {
+  const badges = getGenresBadges(movieDetailObject, genresObject, pageStatus)
   target.innerHTML = `
   <div class="modal-dialog">
     <div class="modal-content">
