@@ -109,6 +109,7 @@ export function searchMovieByTitle (userInput) {
   model.templateData.searchResult = controller.returnSearchMovies(model.templateData.userInput, controller.retrieveFromLocalStorage('allMovies'))
 
   if (model.templateData.searchResult.length === 0) {
+    model.elementObject.searchMessage.textContent = ''
     view.displayEmptyMessage(`No matching results of ${model.templateData.userInput} 😣`, model.elementObject.movieCardsSection)
   } else {
     view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.cardPerPage, 1, true, model.templateData.userInput)
