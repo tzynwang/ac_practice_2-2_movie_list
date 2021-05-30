@@ -1,9 +1,3 @@
-import * as model from './model.js'
-
-export function updatePageStatus (status) {
-  model.config.pageStatus = status
-}
-
 export async function fetchData (url) {
   try {
     return await axios.get(url)

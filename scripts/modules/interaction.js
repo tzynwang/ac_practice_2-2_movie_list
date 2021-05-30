@@ -4,7 +4,7 @@ import * as utility from './utilities.js'
 import * as model from './model.js'
 
 export async function loadIndexPageContents (milliseconds) {
-  controller.updatePageStatus('index')
+  model.config.pageStatus = 'index'
   view.displayLoadingSpin(model.elementObject.movieCardsSection)
   let retrieveAllMovies = controller.retrieveFromLocalStorage('allMovies')
   // only fetch when localStorage key 'allMovies' has no value
@@ -23,7 +23,7 @@ export async function loadIndexPageContents (milliseconds) {
 }
 
 export function loadFavoritePageContents (milliseconds) {
-  controller.updatePageStatus('favorite')
+  model.config.pageStatus = 'favorite'
   view.displayLoadingSpin(model.elementObject.movieCardsSection)
   const allMovies = controller.retrieveFromLocalStorage('allMovies')
   const favoriteMovies = controller.filterFavoriteMovies(allMovies)
@@ -96,7 +96,7 @@ export function searchMovieByTitle (userInput) {
   controller.uncheckedAllOptions(document.querySelectorAll('#movieGenres .accordion-body :checked'))
   view.collapseAccordion()
 
-  controller.updatePageStatus('search')
+  model.config.pageStatus = 'search'
   model.elementObject.searchInput.value = ''
   if (!document.querySelector('#clearButton')) {
     model.elementObject.searchButton.insertAdjacentHTML('beforebegin', `
@@ -133,12 +133,12 @@ export function filterMovies () {
   const checkedGenres = document.querySelectorAll('#movieGenres .accordion-body :checked')
 
   if (checkedGenres.length === 0) {
-    controller.updatePageStatus('index')
+    model.config.pageStatus = 'index'
     loadIndexPageContents(250)
     return
   }
 
-  controller.updatePageStatus('filter')
+  model.config.pageStatus = 'filter'
   const checkedArray = []
   checkedGenres.forEach(checked => checkedArray.push(Number(checked.value)))
 
