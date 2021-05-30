@@ -1,40 +1,40 @@
 import * as controller from './controller.js'
 import * as view from './view.js'
 import * as utility from './utilities.js'
-import * as main from '../generalData.js'
+import * as model from '../model.js'
 
 export async function loadIndexPageContents (milliseconds) {
   controller.updatePageStatus('index')
-  view.displayLoadingSpin(main.elementObject.movieCardsSection)
+  view.displayLoadingSpin(model.elementObject.movieCardsSection)
   let retrieveAllMovies = controller.retrieveFromLocalStorage('allMovies')
   // only fetch when localStorage key 'allMovies' has no value
   if (retrieveAllMovies === null) {
-    const allMovies = await controller.fetchData(main.config.allMoviesApi)
+    const allMovies = await controller.fetchData(model.config.allMoviesApi)
     controller.saveToLocalStorage('allMovies', allMovies.data.results)
     retrieveAllMovies = controller.retrieveFromLocalStorage('allMovies')
   }
-  view.displayFilterBadges(main.elementObject.filter, main.templateData.movieGenres)
+  view.displayFilterBadges(model.elementObject.filter, model.templateData.movieGenres)
   setTimeout(() => {
     view.displayMovieCard(
-      retrieveAllMovies, main.elementObject.movieCardsSection, main.config.cardPerPage, main.config.startPage
+      retrieveAllMovies, model.elementObject.movieCardsSection, model.config.cardPerPage, model.config.startPage
     )
-    view.displayPagination(retrieveAllMovies, main.elementObject.pagination, main.config.cardPerPage)
+    view.displayPagination(retrieveAllMovies, model.elementObject.pagination, model.config.cardPerPage)
   }, milliseconds)
 }
 
 export function loadFavoritePageContents (milliseconds) {
   controller.updatePageStatus('favorite')
-  view.displayLoadingSpin(main.elementObject.movieCardsSection)
+  view.displayLoadingSpin(model.elementObject.movieCardsSection)
   const allMovies = controller.retrieveFromLocalStorage('allMovies')
   const favoriteMovies = controller.filterFavoriteMovies(allMovies)
   setTimeout(() => {
     if (favoriteMovies.length === 0) {
-      view.displayEmptyMessage('Hmm, have no favorite movie yet 😌', main.elementObject.movieCardsSection)
+      view.displayEmptyMessage('Hmm, have no favorite movie yet 😌', model.elementObject.movieCardsSection)
     } else {
       view.displayMovieCard(
-        favoriteMovies, main.elementObject.movieCardsSection, main.config.cardPerPage, main.config.startPage
+        favoriteMovies, model.elementObject.movieCardsSection, model.config.cardPerPage, model.config.startPage
       )
-      view.displayPagination(favoriteMovies, main.elementObject.pagination, main.config.cardPerPage)
+      view.displayPagination(favoriteMovies, model.elementObject.pagination, model.config.cardPerPage)
     }
   }, milliseconds)
 }
@@ -44,16 +44,16 @@ export async function movieCardInteraction (event) {
   switch (targetClass) {
     case 'detail': {
       const movieIdClicked = event.target.dataset.id
-      if (main.templateData.movieIdClicked === movieIdClicked) {
-        view.displayMovieModal(main.templateData.movieModalDetail, main.templateData.movieGenres, main.elementObject.movieModal, main.config.pageStatus)
+      if (model.templateData.movieIdClicked === movieIdClicked) {
+        view.displayMovieModal(model.templateData.movieModalDetail, model.templateData.movieGenres, model.elementObject.movieModal, model.config.pageStatus)
         return
       } else {
-        main.templateData.movieIdClicked = movieIdClicked
-        view.displayEmptyMovieModal(main.elementObject.movieModal)
-        const movieDetailApi = `${main.config.allMoviesApi}${event.target.dataset.id}`
+        model.templateData.movieIdClicked = movieIdClicked
+        view.displayEmptyMovieModal(model.elementObject.movieModal)
+        const movieDetailApi = `${model.config.allMoviesApi}${event.target.dataset.id}`
         const movieDetailObject = await controller.fetchData(movieDetailApi)
-        view.displayMovieModal(movieDetailObject.data.results, main.templateData.movieGenres, main.elementObject.movieModal, main.config.pageStatus)
-        main.templateData.movieModalDetail = movieDetailObject.data.results
+        view.displayMovieModal(movieDetailObject.data.results, model.templateData.movieGenres, model.elementObject.movieModal, model.config.pageStatus)
+        model.templateData.movieModalDetail = movieDetailObject.data.results
         return
       }
     }
@@ -71,60 +71,60 @@ export function paginationInteraction (event, status) {
   const retrieveAllMovies = controller.retrieveFromLocalStorage('allMovies')
   switch (status) {
     case 'index':
-      view.displayMovieCard(retrieveAllMovies, main.elementObject.movieCardsSection, main.config.cardPerPage, pageNumber)
+      view.displayMovieCard(retrieveAllMovies, model.elementObject.movieCardsSection, model.config.cardPerPage, pageNumber)
       break
     case 'favorite':
-      view.displayMovieCard(controller.filterFavoriteMovies(retrieveAllMovies), main.elementObject.movieCardsSection, main.config.cardPerPage, pageNumber)
+      view.displayMovieCard(controller.filterFavoriteMovies(retrieveAllMovies), model.elementObject.movieCardsSection, model.config.cardPerPage, pageNumber)
       break
     case 'search':
-      view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, pageNumber, true, main.templateData.userInput)
+      view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.cardPerPage, pageNumber, true, model.templateData.userInput)
       break
     case 'filter':
-      view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, pageNumber)
+      view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.cardPerPage, pageNumber)
   }
   window.scrollTo(0, 0)
 }
 
 export function searchMovieByTitle (userInput) {
   if (utility.isEmptyString(userInput)) {
-    main.elementObject.searchInput.classList.add('is-invalid')
+    model.elementObject.searchInput.classList.add('is-invalid')
     return
   }
 
   // (if filter) reset filter
-  main.elementObject.filterContainer.classList.add('d-none')
+  model.elementObject.filterContainer.classList.add('d-none')
   controller.uncheckedAllOptions(document.querySelectorAll('#movieGenres .accordion-body :checked'))
   view.collapseAccordion()
 
   controller.updatePageStatus('search')
-  main.elementObject.searchInput.value = ''
+  model.elementObject.searchInput.value = ''
   if (!document.querySelector('#clearButton')) {
-    main.elementObject.searchButton.insertAdjacentHTML('beforebegin', `
+    model.elementObject.searchButton.insertAdjacentHTML('beforebegin', `
     <button class="btn btn-warning" type="button" id="clearButton">Clear search result</button>
     `)
   }
   document.querySelector('#clearButton').addEventListener('click', clearSearchResult)
-  main.elementObject.searchInput.classList.remove('is-invalid')
-  main.templateData.userInput = userInput
-  main.templateData.searchResult = controller.returnSearchMovies(main.templateData.userInput, controller.retrieveFromLocalStorage('allMovies'))
+  model.elementObject.searchInput.classList.remove('is-invalid')
+  model.templateData.userInput = userInput
+  model.templateData.searchResult = controller.returnSearchMovies(model.templateData.userInput, controller.retrieveFromLocalStorage('allMovies'))
 
-  if (main.templateData.searchResult.length === 0) {
-    view.displayEmptyMessage(`No matching results of ${main.templateData.userInput} 😣`, main.elementObject.movieCardsSection)
+  if (model.templateData.searchResult.length === 0) {
+    view.displayEmptyMessage(`No matching results of ${model.templateData.userInput} 😣`, model.elementObject.movieCardsSection)
   } else {
-    view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, 1, true, main.templateData.userInput)
-    main.elementObject.searchMessage.classList.add('mt-3')
-    main.elementObject.searchMessage.textContent = `Search results of "${main.templateData.userInput}":`
+    view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.cardPerPage, 1, true, model.templateData.userInput)
+    model.elementObject.searchMessage.classList.add('mt-3')
+    model.elementObject.searchMessage.textContent = `Search results of "${model.templateData.userInput}":`
   }
-  view.displayPagination(main.templateData.searchResult, main.elementObject.pagination, main.config.cardPerPage)
+  view.displayPagination(model.templateData.searchResult, model.elementObject.pagination, model.config.cardPerPage)
   window.scrollTo(0, 0)
 }
 
 function clearSearchResult () {
-  main.elementObject.searchInput.value = ''
-  main.elementObject.searchMessage.textContent = ''
-  main.elementObject.searchMessage.classList.remove('mt-3')
+  model.elementObject.searchInput.value = ''
+  model.elementObject.searchMessage.textContent = ''
+  model.elementObject.searchMessage.classList.remove('mt-3')
   document.querySelector('#clearButton').remove()
-  main.elementObject.filterContainer.classList.remove('d-none')
+  model.elementObject.filterContainer.classList.remove('d-none')
   loadIndexPageContents(250)
 }
 
@@ -142,14 +142,14 @@ export function filterMovies () {
   checkedGenres.forEach(checked => checkedArray.push(Number(checked.value)))
 
   const retrieveAllMovies = controller.retrieveFromLocalStorage('allMovies')
-  main.templateData.searchResult = []
+  model.templateData.searchResult = []
   retrieveAllMovies.forEach(movie => {
     if (checkedArray.every(checked => movie.genres.includes(checked))) {
-      main.templateData.searchResult.push(movie)
+      model.templateData.searchResult.push(movie)
     }
   })
-  view.displayMovieCard(main.templateData.searchResult, main.elementObject.movieCardsSection, main.config.cardPerPage, 1)
-  view.displayPagination(main.templateData.searchResult, main.elementObject.pagination, main.config.cardPerPage)
+  view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.cardPerPage, 1)
+  view.displayPagination(model.templateData.searchResult, model.elementObject.pagination, model.config.cardPerPage)
   window.scrollTo(0, 0)
 }
 

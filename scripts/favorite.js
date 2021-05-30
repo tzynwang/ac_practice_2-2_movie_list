@@ -1,10 +1,10 @@
 import * as interaction from './modules/interaction.js'
-import * as main from './generalData.js'
+import * as model from './model.js'
 
 interaction.loadFavoritePageContents(300)
 
-main.elementObject.movieCardsSection.addEventListener('click', interaction.movieCardInteraction)
+model.elementObject.movieCardsSection.addEventListener('click', interaction.movieCardInteraction)
 
-main.elementObject.pagination.addEventListener('click', event => {
-  interaction.paginationInteraction(event, main.config.pageStatus)
+model.elementObject.pagination.addEventListener('click', event => {
+  interaction.paginationInteraction(event, model.config.pageStatus)
 })

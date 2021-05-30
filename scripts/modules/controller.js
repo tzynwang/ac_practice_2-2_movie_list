@@ -1,7 +1,7 @@
-import * as main from '../generalData.js'
+import * as model from '../model.js'
 
 export function updatePageStatus (status) {
-  main.config.pageStatus = status
+  model.config.pageStatus = status
 }
 
 export async function fetchData (url) {
