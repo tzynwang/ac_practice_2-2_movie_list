@@ -82,6 +82,23 @@ function getGenresBadges (movieDetailObject, genresMap, pageStatus) {
   return badges
 }
 
+export function displayEmptyMovieModal (target) {
+  target.innerHTML = `
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title h5" id="movieModalLabel"></p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>`
+}
+
 export function displayMovieModal (movieDetailObject, target, pageStatus) {
   const badges = getGenresBadges(movieDetailObject, main.templateData.movieGenres, pageStatus)
   target.innerHTML = `
