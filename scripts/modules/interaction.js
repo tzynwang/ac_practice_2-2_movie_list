@@ -53,7 +53,7 @@ export async function movieCardInteraction (event) {
         const movieDetailApi = `${main.config.allMoviesApi}${event.target.dataset.id}`
         const movieDetailObject = await controller.fetchData(movieDetailApi)
         view.displayMovieModal(movieDetailObject.data.results, main.elementObject.movieModal, main.config.pageStatus)
-        main.templateData.movieModalDetail = movieDetailObject
+        main.templateData.movieModalDetail = movieDetailObject.data.results
         return
       }
     }
