@@ -4,7 +4,7 @@ export function displayLoadingSpin (target) {
   target.innerHTML = `
   <div class="w-100 d-flex justify-content-center align-items-center">
     <div class="spinner-grow text-light" role="status">
-      <span class="visually-hidden">Movie Data Downloading...</span>
+      <span class="visually-hidden">spinner</span>
     </div>
     <span class="m-3 text-light">Movie Data Downloading...</span>
   </div>`
