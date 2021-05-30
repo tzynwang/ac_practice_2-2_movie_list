@@ -1,7 +1,7 @@
 import * as controller from './controller.js'
 import * as view from './view.js'
 import * as utility from './utilities.js'
-import * as model from '../model.js'
+import * as model from './model.js'
 
 export async function loadIndexPageContents (milliseconds) {
   controller.updatePageStatus('index')
