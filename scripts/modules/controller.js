@@ -41,6 +41,7 @@ export function addToFavorite (event, localStorageKey) {
 }
 
 export function filterFavoriteMovies (dataArray) {
+  if (!dataArray) return []
   return dataArray.filter(movie => movie.favorite === true)
 }
 
