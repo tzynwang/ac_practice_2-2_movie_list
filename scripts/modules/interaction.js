@@ -16,9 +16,9 @@ export async function loadIndexPageContents (milliseconds) {
   view.displayFilterBadges(model.elementObject.filter, model.templateData.movieGenres)
   setTimeout(() => {
     view.displayMovieCard(
-      retrieveAllMovies, model.elementObject.movieCardsSection, model.config.cardPerPage, model.config.startPage
+      retrieveAllMovies, model.elementObject.movieCardsSection, model.config.itemPerPage, model.config.startPage
     )
-    view.displayPagination(retrieveAllMovies, model.elementObject.pagination, model.config.cardPerPage)
+    view.displayPagination(retrieveAllMovies, model.elementObject.pagination, model.config.itemPerPage)
   }, milliseconds)
 }
 
@@ -32,9 +32,9 @@ export function loadFavoritePageContents (milliseconds) {
       view.displayEmptyMessage('Hmm, have no favorite movie yet 😌', model.elementObject.movieCardsSection)
     } else {
       view.displayMovieCard(
-        favoriteMovies, model.elementObject.movieCardsSection, model.config.cardPerPage, model.config.startPage
+        favoriteMovies, model.elementObject.movieCardsSection, model.config.itemPerPage, model.config.startPage
       )
-      view.displayPagination(favoriteMovies, model.elementObject.pagination, model.config.cardPerPage)
+      view.displayPagination(favoriteMovies, model.elementObject.pagination, model.config.itemPerPage)
     }
   }, milliseconds)
 }
@@ -71,16 +71,16 @@ export function paginationInteraction (event, status) {
   const retrieveAllMovies = controller.retrieveFromLocalStorage('allMovies')
   switch (status) {
     case 'index':
-      view.displayMovieCard(retrieveAllMovies, model.elementObject.movieCardsSection, model.config.cardPerPage, pageNumber)
+      view.displayMovieCard(retrieveAllMovies, model.elementObject.movieCardsSection, model.config.itemPerPage, pageNumber)
       break
     case 'favorite':
-      view.displayMovieCard(controller.filterFavoriteMovies(retrieveAllMovies), model.elementObject.movieCardsSection, model.config.cardPerPage, pageNumber)
+      view.displayMovieCard(controller.filterFavoriteMovies(retrieveAllMovies), model.elementObject.movieCardsSection, model.config.itemPerPage, pageNumber)
       break
     case 'search':
-      view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.cardPerPage, pageNumber, true, model.templateData.userInput)
+      view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, pageNumber, true, model.templateData.userInput)
       break
     case 'filter':
-      view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.cardPerPage, pageNumber)
+      view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, pageNumber)
   }
   window.scrollTo(0, 0)
 }
@@ -112,11 +112,11 @@ export function searchMovieByTitle (userInput) {
     model.elementObject.searchMessage.textContent = ''
     view.displayEmptyMessage(`No matching results of ${model.templateData.userInput} 😣`, model.elementObject.movieCardsSection)
   } else {
-    view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.cardPerPage, 1, true, model.templateData.userInput)
+    view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, 1, true, model.templateData.userInput)
     model.elementObject.searchMessage.classList.add('mt-3')
     model.elementObject.searchMessage.textContent = `Search results of "${model.templateData.userInput}":`
   }
-  view.displayPagination(model.templateData.searchResult, model.elementObject.pagination, model.config.cardPerPage)
+  view.displayPagination(model.templateData.searchResult, model.elementObject.pagination, model.config.itemPerPage)
   window.scrollTo(0, 0)
 }
 
@@ -149,8 +149,8 @@ export function filterMovies () {
       model.templateData.searchResult.push(movie)
     }
   })
-  view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.cardPerPage, 1)
-  view.displayPagination(model.templateData.searchResult, model.elementObject.pagination, model.config.cardPerPage)
+  view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, 1)
+  view.displayPagination(model.templateData.searchResult, model.elementObject.pagination, model.config.itemPerPage)
   window.scrollTo(0, 0)
 }
 

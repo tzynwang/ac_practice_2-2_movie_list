@@ -10,10 +10,11 @@ export const elementObject = {
 }
 
 export const config = {
-  cardPerPage: 12,
+  itemPerPage: 12,
   startPage: 1,
   allMoviesApi: 'https://movie-list.alphacamp.io/api/v1/movies/',
-  pageStatus: undefined
+  pageStatus: undefined,
+  displayStatus: 'grid' // 'grid' || 'list'
 }
 
 export const templateData = {

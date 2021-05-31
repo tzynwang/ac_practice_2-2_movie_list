@@ -20,9 +20,9 @@ export function displayFilterBadges (target, genresObject) {
   })
 }
 
-export function displayMovieCard (dataArray, target, cardPerPage, currentPage, highlight = false, keyword) {
+export function displayMovieCard (dataArray, target, itemPerPage, currentPage, highlight = false, keyword) {
   target.innerHTML = ''
-  const sliceArray = dataArray.slice(cardPerPage * (currentPage - 1), cardPerPage * currentPage)
+  const sliceArray = dataArray.slice(itemPerPage * (currentPage - 1), itemPerPage * currentPage)
   sliceArray.forEach(data => {
     let favoriteIconClass = ''
     data.favorite === true
@@ -130,9 +130,9 @@ export function displayMovieModal (movieDetailObject, genresObject, target, page
   </div>`
 }
 
-export function displayPagination (dataArray, target, cardPerPage) {
+export function displayPagination (dataArray, target, itemPerPage) {
   target.innerHTML = ''
-  const paginationLength = Math.ceil(dataArray.length / cardPerPage)
+  const paginationLength = Math.ceil(dataArray.length / itemPerPage)
   for (let i = 1; i <= paginationLength; i++) {
     i === 1
       ? target.innerHTML += `
