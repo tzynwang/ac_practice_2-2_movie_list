@@ -3,7 +3,17 @@ import * as view from './view.js'
 import * as utility from './utilities.js'
 import * as model from './model.js'
 
+function setDefaultDisplaySetting (setting) {
+  let currentDisplaySetting = controller.retrieveFromLocalStorage('displaySetting')
+  if (!currentDisplaySetting) {
+    controller.saveToLocalStorage('displaySetting', setting)
+  }
+  currentDisplaySetting = controller.retrieveFromLocalStorage('displaySetting')
+  view.setDisplaySettingPanelClass(currentDisplaySetting)
+}
+
 export async function loadIndexPageContents (milliseconds) {
+  setDefaultDisplaySetting(model.config.displayStatus)
   model.config.pageStatus = 'index'
   view.displayLoadingSpin(model.elementObject.movieCardsSection)
   let retrieveAllMovies = controller.retrieveFromLocalStorage('allMovies')
@@ -15,14 +25,13 @@ export async function loadIndexPageContents (milliseconds) {
   }
   view.displayFilterBadges(model.elementObject.filter, model.templateData.movieGenres)
   setTimeout(() => {
-    view.displayMovieCard(
-      retrieveAllMovies, model.elementObject.movieCardsSection, model.config.itemPerPage, model.config.startPage
-    )
-    view.displayPagination(retrieveAllMovies, model.elementObject.pagination, model.config.itemPerPage)
+    displayByConfigStatus(retrieveAllMovies, model.elementObject.movieCardsSection, model.config.itemPerPage, model.config.lastClickedPageNumber)
+    view.displayPagination(retrieveAllMovies, model.elementObject.pagination, model.config.itemPerPage, model.config.lastClickedPageNumber)
   }, milliseconds)
 }
 
 export function loadFavoritePageContents (milliseconds) {
+  setDefaultDisplaySetting(model.config.displayStatus)
   model.config.pageStatus = 'favorite'
   view.displayLoadingSpin(model.elementObject.movieCardsSection)
   const allMovies = controller.retrieveFromLocalStorage('allMovies')
@@ -31,12 +40,27 @@ export function loadFavoritePageContents (milliseconds) {
     if (favoriteMovies.length === 0) {
       view.displayEmptyMessage('Hmm, have no favorite movie yet 😌', model.elementObject.movieCardsSection)
     } else {
-      view.displayMovieCard(
-        favoriteMovies, model.elementObject.movieCardsSection, model.config.itemPerPage, model.config.startPage
-      )
-      view.displayPagination(favoriteMovies, model.elementObject.pagination, model.config.itemPerPage)
+      displayByConfigStatus(favoriteMovies, model.elementObject.movieCardsSection, model.config.itemPerPage, model.config.lastClickedPageNumber)
+      view.displayPagination(favoriteMovies, model.elementObject.pagination, model.config.itemPerPage, model.config.lastClickedPageNumber)
     }
   }, milliseconds)
+}
+
+export function displaySettingInteraction (event) {
+  const clickedDisplaySetting = event.target.dataset.display
+  const currentDisplaySetting = controller.retrieveFromLocalStorage('displaySetting')
+
+  if (clickedDisplaySetting !== currentDisplaySetting) {
+    controller.updateLocalStorage('displaySetting', clickedDisplaySetting)
+    view.toggleDisplaySettingPanelClass()
+    switch (model.config.pageStatus) {
+      case 'index':
+        loadIndexPageContents(250)
+        break
+      case 'favorite':
+        loadFavoritePageContents(250)
+    }
+  }
 }
 
 export async function movieCardInteraction (event) {
@@ -63,24 +87,29 @@ export async function movieCardInteraction (event) {
   }
 }
 
-export function paginationInteraction (event, status) {
+export function paginationInteraction (event, pageStatus) {
   const pageNumber = Number(event.target.innerText)
   if (isNaN(pageNumber)) return
 
+  const lastClickedPageNumber = model.config.lastClickedPageNumber
+  if (lastClickedPageNumber === pageNumber) return
+
+  model.config.lastClickedPageNumber = pageNumber
+
   view.updatePaginationActivePage(event)
   const retrieveAllMovies = controller.retrieveFromLocalStorage('allMovies')
-  switch (status) {
+  switch (pageStatus) {
     case 'index':
-      view.displayMovieCard(retrieveAllMovies, model.elementObject.movieCardsSection, model.config.itemPerPage, pageNumber)
+      displayByConfigStatus(retrieveAllMovies, model.elementObject.movieCardsSection, model.config.itemPerPage, pageNumber)
       break
     case 'favorite':
-      view.displayMovieCard(controller.filterFavoriteMovies(retrieveAllMovies), model.elementObject.movieCardsSection, model.config.itemPerPage, pageNumber)
+      displayByConfigStatus(controller.filterFavoriteMovies(retrieveAllMovies), model.elementObject.movieCardsSection, model.config.itemPerPage, pageNumber)
       break
     case 'search':
-      view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, pageNumber, true, model.templateData.userInput)
+      displayByConfigStatus(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, pageNumber, true, model.templateData.userInput)
       break
     case 'filter':
-      view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, pageNumber)
+      displayByConfigStatus(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, pageNumber)
   }
   window.scrollTo(0, 0)
 }
@@ -112,7 +141,7 @@ export function searchMovieByTitle (userInput) {
     model.elementObject.searchMessage.textContent = ''
     view.displayEmptyMessage(`No matching results of ${model.templateData.userInput} 😣`, model.elementObject.movieCardsSection)
   } else {
-    view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, 1, true, model.templateData.userInput)
+    displayByConfigStatus(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, 1, true, model.templateData.userInput)
     model.elementObject.searchMessage.classList.add('mt-3')
     model.elementObject.searchMessage.textContent = `Search results of "${model.templateData.userInput}":`
   }
@@ -149,7 +178,7 @@ export function filterMovies () {
       model.templateData.searchResult.push(movie)
     }
   })
-  view.displayMovieCard(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, 1)
+  displayByConfigStatus(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, 1)
   view.displayPagination(model.templateData.searchResult, model.elementObject.pagination, model.config.itemPerPage)
   window.scrollTo(0, 0)
 }
@@ -167,5 +196,19 @@ function filterByMovieModalBadge (event) {
     document.querySelector(`#accordion input[value="${genre}"]`).checked = true
     filterMovies()
     view.expendAccordion()
+  }
+}
+
+function displayByConfigStatus (dataArray, target, itemPerPage, currentPage, highlight = false, keyword) {
+  const currentDisplaySetting = controller.retrieveFromLocalStorage('displaySetting')
+  if (!currentDisplaySetting) return
+
+  switch (currentDisplaySetting) {
+    case 'grid':
+      view.displayMovieCard(
+        dataArray, target, itemPerPage, currentPage, highlight, keyword)
+      break
+    case 'list':
+      view.displayMovieList(dataArray, target, itemPerPage, currentPage, highlight, keyword)
   }
 }
