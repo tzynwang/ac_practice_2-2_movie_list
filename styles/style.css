@@ -1,6 +1,6 @@
 #displaySettingPanel {
   position: fixed;
-  bottom: 3rem;
+  bottom: 4rem;
   right: 3rem;
   z-index: 99;
 }
