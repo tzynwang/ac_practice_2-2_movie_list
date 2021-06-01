@@ -57,6 +57,12 @@ export function displaySettingInteraction (event) {
       case 'index':
         loadIndexPageContents(250)
         break
+      case 'search':
+        loadSearchPageContents(model.templateData.userInput)
+        break
+      case 'filter':
+        filterMovieByGenre()
+        break
       case 'favorite':
         loadFavoritePageContents(250)
     }
@@ -134,18 +140,23 @@ export function searchMovieByTitle (userInput) {
   }
   document.querySelector('#clearButton').addEventListener('click', clearSearchResult)
   model.elementObject.searchInput.classList.remove('is-invalid')
+
   model.templateData.userInput = userInput
+  loadSearchPageContents(model.templateData.userInput)
+}
+
+function loadSearchPageContents (userInput) {
   model.templateData.searchResult = controller.returnSearchMovies(model.templateData.userInput, controller.retrieveFromLocalStorage('allMovies'))
 
   if (model.templateData.searchResult.length === 0) {
     model.elementObject.searchMessage.textContent = ''
     view.displayEmptyMessage(`No matching results of ${model.templateData.userInput} 😣`, model.elementObject.movieCardsSection)
   } else {
-    displayByConfigStatus(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, 1, true, model.templateData.userInput)
+    displayByConfigStatus(model.templateData.searchResult, model.elementObject.movieCardsSection, model.config.itemPerPage, model.config.lastClickedPageNumber, true, model.templateData.userInput)
     model.elementObject.searchMessage.classList.add('mt-3')
     model.elementObject.searchMessage.textContent = `Search results of "${model.templateData.userInput}":`
   }
-  view.displayPagination(model.templateData.searchResult, model.elementObject.pagination, model.config.itemPerPage)
+  view.displayPagination(model.templateData.searchResult, model.elementObject.pagination, model.config.itemPerPage, model.config.lastClickedPageNumber)
   window.scrollTo(0, 0)
 }
 
@@ -158,7 +169,7 @@ function clearSearchResult () {
   loadIndexPageContents(250)
 }
 
-export function filterMovies () {
+export function filterMovieByGenre () {
   const checkedGenres = document.querySelectorAll('#movieGenres .accordion-body :checked')
 
   if (checkedGenres.length === 0) {
@@ -194,7 +205,7 @@ function filterByMovieModalBadge (event) {
     document.querySelector('.modal-header .btn-close').click()
     // check genre accordingly
     document.querySelector(`#accordion input[value="${genre}"]`).checked = true
-    filterMovies()
+    filterMovieByGenre()
     view.expendAccordion()
   }
 }
