@@ -20,6 +20,7 @@ export const config = {
 }
 
 export const templateData = {
+  draggedItem: undefined,
   userInput: undefined,
   searchResult: undefined,
   movieIdClicked: undefined,

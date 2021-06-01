@@ -2,6 +2,7 @@ import * as interaction from './modules/interaction.js'
 import * as model from './modules/model.js'
 
 interaction.loadIndexPageContents(300)
+interaction.makeDisplaySettingPanelDraggable()
 
 model.elementObject.displaySettingPanel.addEventListener('click', interaction.displaySettingInteraction)
 

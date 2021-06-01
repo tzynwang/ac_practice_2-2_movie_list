@@ -225,3 +225,52 @@ function displayByConfigStatus (dataArray, target, itemPerPage, currentPage, hig
       view.displayMovieList(dataArray, target, itemPerPage, currentPage, highlight, keyword)
   }
 }
+
+export function makeDisplaySettingPanelDraggable () {
+  document.querySelector('#displaySettingPanel').addEventListener('dragstart', event => {
+    model.templateData.draggedItem = event.target
+    setDraggedTargetAndDropZoneOpacity(0.2, 0.4, event)
+  })
+  document.querySelector('#displaySettingPanel').addEventListener('dragend', event => {
+    setDraggedTargetAndDropZoneOpacity(1, 0, event)
+  })
+
+  document.querySelector('.drop-right-top').addEventListener('dragover', event => {
+    event.preventDefault()
+  })
+  document.querySelector('.drop-right-bottom').addEventListener('dragover', event => {
+    event.preventDefault()
+  })
+  document.querySelector('.drop-left-bottom').addEventListener('dragover', event => {
+    event.preventDefault()
+  })
+
+  document.querySelector('.drop-right-top').addEventListener('drop', event => {
+    // prevent default action (open as link)
+    event.preventDefault()
+    moveDraggableItem(event, 'drop-right-top')
+  })
+  document.querySelector('.drop-right-bottom').addEventListener('drop', event => {
+    event.preventDefault()
+    moveDraggableItem(event, 'drop-right-bottom')
+  })
+  document.querySelector('.drop-left-bottom').addEventListener('drop', event => {
+    event.preventDefault()
+    moveDraggableItem(event, 'drop-left-bottom')
+  })
+}
+
+function setDraggedTargetAndDropZoneOpacity (draggedTargetOpacity, dropZoneOpacity, event) {
+  event.target.style.opacity = draggedTargetOpacity
+  const backgrounds = document.querySelectorAll('.drop-right-top, .drop-left-bottom, .drop-right-bottom')
+  backgrounds.forEach(node => {
+    node.style.backgroundColor = `rgba(0, 0, 0, ${dropZoneOpacity})`
+  })
+}
+
+function moveDraggableItem (event, className) {
+  if (event.target.className === className) {
+    model.templateData.draggedItem.parentNode.removeChild(model.templateData.draggedItem)
+    event.target.appendChild(model.templateData.draggedItem)
+  }
+}

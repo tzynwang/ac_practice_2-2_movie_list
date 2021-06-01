@@ -36,17 +36,29 @@
   </nav>
 
   <main class="container mb-5">
-    <!-- Display Setting -->
-    <section id="displaySettingPanel" class="d-flex flex-column">
-      <button type="button" class="btn btn-lg d-flex justify-content-center align-items-center shadow"
-        data-display="grid">
-        <i class="bi bi-grid-fill" data-display="grid"></i>
-      </button>
-      <button type="button" class="btn btn-lg d-flex justify-content-center align-items-center shadow"
-        data-display="list">
-        <i class="bi bi-list-task" data-display="list"></i>
-      </button>
+    <!-- Drop Area -->
+    <section>
+      <div class="drop-right-top">
+      </div>
+      <div class="drop-right-bottom">
+        <!-- Display Setting -->
+        <section id="displaySettingPanel" class="d-flex flex-column" draggable="true">
+          <button type="button" class="btn btn-lg d-flex justify-content-center align-items-center shadow"
+            data-display="grid">
+            <i class="bi bi-grid-fill" data-display="grid"></i>
+          </button>
+          <button type="button" class="btn btn-lg d-flex justify-content-center align-items-center shadow"
+            data-display="list">
+            <i class="bi bi-list-task" data-display="list"></i>
+          </button>
+        </section>
+      </div>
+      <div class="drop-left-bottom">
+      </div>
     </section>
+
+
+
     <!-- Search bar -->
     <section class="row my-3">
       <div class="input-group has-validation">

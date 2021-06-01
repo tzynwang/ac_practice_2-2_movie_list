@@ -1,8 +1,39 @@
-#displaySettingPanel {
-  position: fixed;
-  bottom: 4rem;
-  right: 3rem;
+.drop-right-top, .drop-left-bottom, .drop-right-bottom {
   z-index: 99;
+  position: fixed;
+  width: 96px;
+  height: 128px;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 0.15s;
+}
+
+.drop-right-top {
+  top: 20%;
+  right: 2rem;
+}
+
+.drop-right-bottom {
+  right: 2rem;
+  bottom: 4rem;
+}
+
+.drop-left-bottom {
+  bottom: 4rem;
+  left: 2rem;
+}
+
+#displaySettingPanel button {
+  transform: rotate(45deg);
+  width: 48px;
+  height: 48px;
+  z-index: 99;
+  position: relative;
+  left: 24px;
+  top: 16px;
+}
+
+#displaySettingPanel i {
+  transform: rotate(-45deg);
 }
 
 #displaySettingPanel .shadow {
@@ -11,17 +42,7 @@
 
 #displaySettingPanel .unchecked {
   background-color: rgba(255, 255, 255, 0.8);
-  z-index: -99;
-}
-
-#displaySettingPanel button {
-  transform: rotate(45deg);
-  width: 48px;
-  height: 48px;
-}
-
-#displaySettingPanel i {
-  transform: rotate(-45deg);
+  z-index: 0;
 }
 
 #movieSearchBar::after {
