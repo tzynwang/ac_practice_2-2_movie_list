@@ -20,6 +20,27 @@ export function displayFilterBadges (target, genresObject) {
   })
 }
 
+export function setDisplaySettingPanelClass (displaySetting) {
+  switch (displaySetting) {
+    case 'grid':
+      document.querySelector('[data-display="grid"]').classList.add('btn-success')
+      document.querySelector('[data-display="list"]').classList.add('btn-link', 'unchecked')
+      break
+    case 'list':
+      document.querySelector('[data-display="list"]').classList.add('btn-success')
+      document.querySelector('[data-display="grid"]').classList.add('btn-link', 'unchecked')
+  }
+}
+
+export function toggleDisplaySettingPanelClass () {
+  document.querySelector('[data-display="grid"]').classList.toggle('btn-link')
+  document.querySelector('[data-display="grid"]').classList.toggle('btn-success')
+  document.querySelector('[data-display="grid"]').classList.toggle('unchecked')
+  document.querySelector('[data-display="list"]').classList.toggle('btn-link')
+  document.querySelector('[data-display="list"]').classList.toggle('btn-success')
+  document.querySelector('[data-display="list"]').classList.toggle('unchecked')
+}
+
 export function displayMovieCard (dataArray, target, itemPerPage, currentPage, highlight = false, keyword) {
   target.innerHTML = ''
   const sliceArray = dataArray.slice(itemPerPage * (currentPage - 1), itemPerPage * currentPage)
@@ -49,6 +70,41 @@ export function displayMovieCard (dataArray, target, itemPerPage, currentPage, h
       </div>
     </div>
     `
+  })
+}
+
+export function displayMovieList (dataArray, target, itemPerPage, currentPage, highlight = false, keyword) {
+  target.innerHTML = ''
+  target.insertAdjacentHTML('afterbegin', `
+    <ul class="list-group list-group-flush w-100" id="movieList">
+    </ul>
+  `)
+  const sliceArray = dataArray.slice(itemPerPage * (currentPage - 1), itemPerPage * currentPage)
+  let movieIndex = itemPerPage * (currentPage - 1) + 1
+  sliceArray.forEach(data => {
+    let favoriteIconClass = ''
+    data.favorite === true
+      ? favoriteIconClass = 'bi bi-star-fill'
+      : favoriteIconClass = 'bi bi-star'
+    let movieTitle
+    highlight === true
+      ? movieTitle = highlightText(data.title, keyword)
+      : movieTitle = data.title
+    document.querySelector('#movieList').innerHTML += `
+    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+      <span>${movieIndex}. ${movieTitle}</span>
+      <div class="inline-block">
+        <button type="button" class="btn btn-primary" data-class="detail" data-id="${data.id}"
+        data-bs-toggle="modal" data-bs-target="#movieModal">
+          Detail
+        </button>
+        <button type="button" class="btn btn-warning" data-class="favorite" data-id="${data.id}">
+          <i class="${favoriteIconClass}" data-class="favorite" data-id="${data.id}"></i>
+        </button>
+      </div>
+    </li>
+    `
+    movieIndex++
   })
 }
 
@@ -130,13 +186,13 @@ export function displayMovieModal (movieDetailObject, genresObject, target, page
   </div>`
 }
 
-export function displayPagination (dataArray, target, itemPerPage) {
+export function displayPagination (dataArray, target, itemPerPage, lastClickedPageNumber = 1) {
   target.innerHTML = ''
   const paginationLength = Math.ceil(dataArray.length / itemPerPage)
   for (let i = 1; i <= paginationLength; i++) {
-    i === 1
+    i === lastClickedPageNumber
       ? target.innerHTML += `
-      <li class="page-item active"><a class="page-link">1</a></li>`
+      <li class="page-item active"><a class="page-link">${lastClickedPageNumber}</a></li>`
       : target.innerHTML += `
       <li class="page-item"><a class="page-link">${i}</a></li>`
   }
