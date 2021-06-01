@@ -23,4 +23,4 @@ model.elementObject.searchInput.addEventListener('keypress', event => {
   if (event.keyCode === 13) model.elementObject.searchButton.click()
 })
 
-model.elementObject.filter.addEventListener('change', interaction.filterMovies)
+model.elementObject.filter.addEventListener('change', interaction.filterMovieByGenre)
