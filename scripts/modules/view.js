@@ -23,21 +23,21 @@ export function displayFilterBadges (target, genresObject) {
 export function setDisplaySettingPanelClass (displaySetting) {
   switch (displaySetting) {
     case 'grid':
-      document.querySelector('[data-display="grid"]').classList.add('btn-success')
+      document.querySelector('[data-display="grid"]').classList.add('btn-primary')
       document.querySelector('[data-display="list"]').classList.add('btn-link', 'unchecked')
       break
     case 'list':
-      document.querySelector('[data-display="list"]').classList.add('btn-success')
+      document.querySelector('[data-display="list"]').classList.add('btn-primary')
       document.querySelector('[data-display="grid"]').classList.add('btn-link', 'unchecked')
   }
 }
 
 export function toggleDisplaySettingPanelClass () {
   document.querySelector('[data-display="grid"]').classList.toggle('btn-link')
-  document.querySelector('[data-display="grid"]').classList.toggle('btn-success')
+  document.querySelector('[data-display="grid"]').classList.toggle('btn-primary')
   document.querySelector('[data-display="grid"]').classList.toggle('unchecked')
   document.querySelector('[data-display="list"]').classList.toggle('btn-link')
-  document.querySelector('[data-display="list"]').classList.toggle('btn-success')
+  document.querySelector('[data-display="list"]').classList.toggle('btn-primary')
   document.querySelector('[data-display="list"]').classList.toggle('unchecked')
 }
 
