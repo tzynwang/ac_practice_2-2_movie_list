@@ -4,6 +4,7 @@ export const elementObject = {
   searchMessage: document.querySelector('#searchMessage'),
   filterContainer: document.querySelector('#accordion'),
   filter: document.querySelector('#movieGenres .accordion-body'),
+  displaySettingPanel: document.querySelector('#displaySettingPanel'),
   movieCardsSection: document.querySelector('#movieCards'),
   movieModal: document.querySelector('#movieModal'),
   pagination: document.querySelector('#pagination')
@@ -14,7 +15,8 @@ export const config = {
   startPage: 1,
   allMoviesApi: 'https://movie-list.alphacamp.io/api/v1/movies/',
   pageStatus: undefined,
-  displayStatus: 'grid' // 'grid' || 'list'
+  displayStatus: 'grid', // 'grid' || 'list'
+  lastClickedPageNumber: 1
 }
 
 export const templateData = {
