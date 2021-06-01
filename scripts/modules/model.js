@@ -5,7 +5,7 @@ export const elementObject = {
   filterContainer: document.querySelector('#accordion'),
   filter: document.querySelector('#movieGenres .accordion-body'),
   displaySettingPanel: document.querySelector('#displaySettingPanel'),
-  movieCardsSection: document.querySelector('#movieCards'),
+  moviesSection: document.querySelector('#movies'),
   movieModal: document.querySelector('#movieModal'),
   pagination: document.querySelector('#pagination')
 }

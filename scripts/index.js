@@ -5,7 +5,7 @@ interaction.loadIndexPageContents(300)
 
 model.elementObject.displaySettingPanel.addEventListener('click', interaction.displaySettingInteraction)
 
-model.elementObject.movieCardsSection.addEventListener('click', async event => {
+model.elementObject.moviesSection.addEventListener('click', async event => {
   await interaction.movieCardInteraction(event)
   interaction.AddEventListenerToMovieModalBadge()
 })
