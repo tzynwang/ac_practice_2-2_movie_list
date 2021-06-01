@@ -1,3 +1,29 @@
+#displaySettingPanel {
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
+  z-index: 99;
+}
+
+#displaySettingPanel .shadow {
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.75) !important;
+}
+
+#displaySettingPanel .unchecked {
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: -99;
+}
+
+#displaySettingPanel button {
+  transform: rotate(45deg);
+  width: 48px;
+  height: 48px;
+}
+
+#displaySettingPanel i {
+  transform: rotate(-45deg);
+}
+
 .modal-body .row-movie-information {
   height: 330px;
 }
