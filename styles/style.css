@@ -24,20 +24,95 @@
   transform: rotate(-45deg);
 }
 
+#movieSearchBar::after {
+  content: '🎞️ title:';
+}
+
+#searchButton::after {
+  content: '🔍';
+}
+
+#clearButton::after {
+  content: '❌';
+}
+
+#movieCards.row>* {
+  padding: 0 .25rem;
+}
+
+.list-movie-title {
+  /* hide overflow text and replace with dots */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 50%;
+}
+
+.fs-5 {
+  font-size: 1.075rem !important;
+}
+
+.modal-content {
+  /* position ancestors for draggable hint icons */
+  filter: opacity(100%);
+}
+
+.col-movie-poster:hover .poster-draggable-hint, .col-movie-description:hover .description-draggable-hint {
+  /* hide icon for desktop users */
+  opacity: 0;
+}
+
+.card-img-top {
+  height: 30vh;
+  object-fit: cover;
+  object-position: center top;
+}
+
 .modal-body .row-movie-information {
   height: 330px;
 }
 
-.modal-body .row-movie-information .col-movie-description {
-  height: 100%;
+.modal-body .col-movie-poster {
+  height: 80px;
+  object-fit: cover;
   overflow-y: auto;
 }
 
-span.badge:hover {
+.poster-draggable-hint, .description-draggable-hint {
+  transform: rotate(45deg);
+  background-color: rgba(255, 193, 7, 0.4);
+  height: 28px;
+  width: 28px;
+  position: fixed;
+  top: 17%;
+  right: 9%;
+  z-index: 9;
+  transition: opacity 0.125s
+}
+
+.description-draggable-hint {
+  top: auto;
+  bottom: 23%;
+}
+
+.poster-draggable-hint i, .description-draggable-hint i {
+  transform: rotate(-45deg);
+}
+
+.modal-body .col-movie-description {
+  overflow-y: auto;
+}
+
+.movie-director-date p {
+  font-size: 0.85rem;
+  margin-bottom: 0;
+}
+
+.modal-body span.badge:hover {
   cursor: default;
 }
 
-span.genres-filter:hover {
+.modal-body span.genres-filter:hover {
   cursor: pointer;
 }
 
@@ -52,4 +127,32 @@ span.genres-filter:hover {
 
 #pagination li:not(.active):hover {
   cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  #movieSearchBar::after {
+    content: '🎞️ Movie title:';
+  }
+  #searchButton::after {
+    content: '🔍 Search';
+  }
+  #clearButton::after {
+    content: '❌ Clear search result';
+  }
+  .fs-5 {
+    font-size: 1.25rem !important;
+  }
+  .card-img-top {
+    height: auto;
+  }
+  .modal-body .col-movie-poster {
+    height: 100%;
+    overflow-y: hidden;
+  }
+  .poster-draggable-hint, .description-draggable-hint {
+    display: none !important;
+  }
+  .movie-director-date p {
+    font-size: 1rem;
+  }
 }

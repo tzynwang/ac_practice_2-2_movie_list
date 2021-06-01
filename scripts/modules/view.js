@@ -57,7 +57,7 @@ export function displayMovieCard (dataArray, target, itemPerPage, currentPage, h
     <div class="col">
       <div class="card h-100 justify-content-between">
         <img src="https://raw.githubusercontent.com/ALPHACamp/movie-list-api/master/public/posters/${data.image}" class="card-img-top" alt="movie poster">
-        <p class="card-title h5 m-3">${movieTitle}</p>
+        <p class="card-title fs-5 m-3">${movieTitle}</p>
         <div class="card-body d-flex align-items-end">
           <button type="button" class="btn btn-primary" data-class="detail" data-id="${data.id}"
           data-bs-toggle="modal" data-bs-target="#movieModal">
@@ -92,7 +92,7 @@ export function displayMovieList (dataArray, target, itemPerPage, currentPage, h
       : movieTitle = data.title
     document.querySelector('#movieList').innerHTML += `
     <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-      <span>${movieIndex}. ${movieTitle}</span>
+      <span class="list-movie-title">${movieIndex}. ${movieTitle}</span>
       <div class="inline-block">
         <button type="button" class="btn btn-primary" data-class="detail" data-id="${data.id}"
         data-bs-toggle="modal" data-bs-target="#movieModal">
@@ -138,16 +138,22 @@ function getGenresBadges (movieDetailObject, genresMap, pageStatus) {
 
 export function displayEmptyMovieModal (target) {
   target.innerHTML = `
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <p class="modal-title h5" id="movieModalLabel"></p>
+        <p class="modal-title" id="movieModalLabel"></p>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <div class="w-100 d-flex justify-content-center align-items-center">
+          <div class="spinner-grow text-light" role="status">
+            <span class="visually-hidden">spinner</span>
+          </div>
+          <span class="m-3 text-light">Downloading...</span>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-dark d-none d-md-inline-block" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>`
@@ -156,31 +162,37 @@ export function displayEmptyMovieModal (target) {
 export function displayMovieModal (movieDetailObject, genresObject, target, pageStatus) {
   const badges = getGenresBadges(movieDetailObject, genresObject, pageStatus)
   target.innerHTML = `
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <p class="modal-title h5" id="movieModalLabel">${movieDetailObject.title}</p>
+        <p class="modal-title fs-5" id="movieModalLabel">${movieDetailObject.title}</p>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="row row-movie-information mb-3">
-          <div class="col">
+        <div class="row row-movie-information mb-3 flex-column flex-md-row">
+          <div class="col col-movie-poster mb-2 mb-md-0">
             <img src="https://raw.githubusercontent.com/ALPHACamp/movie-list-api/master/public/posters/${movieDetailObject.image}" class="w-100" alt="movie poster">
+            <span class="poster-draggable-hint d-flex justify-content-center align-items-center">
+              <i class="bi bi-arrows-move"></i>
+            </span>
           </div>
-          <div class="col col-movie-description">
+          <div class="col col-movie-description h-100">
             <p>${movieDetailObject.description}</p>
+            <span class="description-draggable-hint d-flex justify-content-center align-items-center">
+              <i class="bi bi-arrow-down"></i>
+            </span>
           </div>
         </div>
         <div class="row row-genres-badges mb-1">
           <div class="col">${badges}</div>
         </div>
-        <div class="row justify-content-between">
-          <div class="col-auto">Director: ${movieDetailObject.director}</div>
-          <div class="col-auto">Release date: ${movieDetailObject.release_date}</div>
+        <div class="row justify-content-between movie-director-date">
+          <p class="col-auto">Director: ${movieDetailObject.director}</p>
+          <p class="col-auto">Release date: ${movieDetailObject.release_date}</p>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-dark d-none d-md-inline-block" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>`
@@ -237,5 +249,24 @@ export function expendAccordion () {
   const movieGenres = document.querySelector('#movieGenres')
   if (!movieGenres.classList.contains('show')) {
     movieGenres.classList.add('show')
+  }
+}
+
+export function hideDraggableHintIconWhenDrag (event) {
+  document.querySelector('.row-movie-information').addEventListener('touchstart', event => {
+    setOpacity(event.target.tagName, 0)
+  })
+  document.querySelector('.row-movie-information').addEventListener('touchend', event => {
+    setOpacity(event.target.tagName, 1)
+  })
+}
+
+function setOpacity (target, opacity) {
+  switch (target) {
+    case 'IMG':
+      document.querySelector('.poster-draggable-hint').style.opacity = opacity
+      break
+    case 'P':
+      document.querySelector('.description-draggable-hint').style.opacity = opacity
   }
 }
