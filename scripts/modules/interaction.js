@@ -196,6 +196,7 @@ export function filterMovieByGenre () {
 
 export function AddEventListenerToMovieModalBadge () {
   const movieModalBadgesSection = document.querySelector('.row-genres-badges .col')
+  if (!movieModalBadgesSection) return
   movieModalBadgesSection.addEventListener('click', event => filterByMovieModalBadge(event))
 }
 
