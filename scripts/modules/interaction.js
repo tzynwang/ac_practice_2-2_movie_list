@@ -229,10 +229,10 @@ function displayByConfigStatus (dataArray, target, itemPerPage, currentPage, hig
 export function makeDisplaySettingPanelDraggable () {
   document.querySelector('#displaySettingPanel').addEventListener('dragstart', event => {
     model.templateData.draggedItem = event.target
-    setDraggedTargetAndDropZoneOpacity(0.2, 0.4, event)
+    view.setDraggedTargetAndDropZoneOpacity(0.2, 0.4, event)
   })
   document.querySelector('#displaySettingPanel').addEventListener('dragend', event => {
-    setDraggedTargetAndDropZoneOpacity(1, 0, event)
+    view.setDraggedTargetAndDropZoneOpacity(1, 0, event)
   })
 
   document.querySelector('.drop-right-top').addEventListener('dragover', event => {
@@ -257,14 +257,6 @@ export function makeDisplaySettingPanelDraggable () {
   document.querySelector('.drop-left-bottom').addEventListener('drop', event => {
     event.preventDefault()
     moveDraggableItem(event, 'drop-left-bottom')
-  })
-}
-
-function setDraggedTargetAndDropZoneOpacity (draggedTargetOpacity, dropZoneOpacity, event) {
-  event.target.style.opacity = draggedTargetOpacity
-  const backgrounds = document.querySelectorAll('.drop-right-top, .drop-left-bottom, .drop-right-bottom')
-  backgrounds.forEach(node => {
-    node.style.backgroundColor = `rgba(0, 0, 0, ${dropZoneOpacity})`
   })
 }
 

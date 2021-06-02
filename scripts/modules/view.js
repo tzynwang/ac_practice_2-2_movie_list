@@ -254,14 +254,14 @@ export function expendAccordion () {
 
 export function hideDraggableHintIconWhenDrag (event) {
   document.querySelector('.row-movie-information').addEventListener('touchstart', event => {
-    setOpacity(event.target.tagName, 0)
+    setHintIconOpacity(event.target.tagName, 0)
   })
   document.querySelector('.row-movie-information').addEventListener('touchend', event => {
-    setOpacity(event.target.tagName, 1)
+    setHintIconOpacity(event.target.tagName, 1)
   })
 }
 
-function setOpacity (target, opacity) {
+function setHintIconOpacity (target, opacity) {
   switch (target) {
     case 'IMG':
       document.querySelector('.poster-draggable-hint').style.opacity = opacity
@@ -269,4 +269,12 @@ function setOpacity (target, opacity) {
     case 'P':
       document.querySelector('.description-draggable-hint').style.opacity = opacity
   }
+}
+
+export function setDraggedTargetAndDropZoneOpacity (draggedTargetOpacity, dropZoneOpacity, event) {
+  event.target.style.opacity = draggedTargetOpacity
+  const backgrounds = document.querySelectorAll('.drop-right-top, .drop-left-bottom, .drop-right-bottom')
+  backgrounds.forEach(node => {
+    node.style.backgroundColor = `rgba(0, 0, 0, ${dropZoneOpacity})`
+  })
 }
