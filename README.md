@@ -11,7 +11,7 @@ https://tzynwang.github.io/ac_practice_2-2_movie_list/
   ![Search and highlight the keyword](./.README/searchAndHighlight.gif)
 - 支援以電影類型來篩選電影
   - 可透過首頁的篩選清單來篩選
-    ![Filter function](./README/filter.gif)
+    ![Filter function](./.README/filter.gif)
   - 在非搜尋狀態下開啟電影的細節視窗，可透過細節視窗中的電影類型徽章進行篩選
     ![Filter movie by genres badges in detail modal](./.README/filterByModalBadges.gif)
   - 支援複數條件篩選
