@@ -9,6 +9,7 @@ https://tzynwang.github.io/ac_practice_2-2_movie_list/
   - 收藏頁則顯示使用者在首頁對其按讚（星星按鈕）收藏的電影
 - 支援以電影名稱作為關鍵字來搜尋電影
   ![Search and highlight the keyword](./.README/searchAndHighlight.gif)
+  - 點擊搜尋框右側的黃色清空按鈕，即可離開搜尋狀態
 - 支援以電影類型來篩選電影
   - 可透過首頁的篩選清單來篩選
     ![Filter function](./.README/filter.gif)
