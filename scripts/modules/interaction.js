@@ -48,8 +48,9 @@ export function loadFavoritePageContents (milliseconds) {
 
 export function displaySettingInteraction (event) {
   const clickedDisplaySetting = event.target.dataset.display
-  const currentDisplaySetting = controller.retrieveFromLocalStorage('displaySetting')
+  if (!clickedDisplaySetting) return
 
+  const currentDisplaySetting = controller.retrieveFromLocalStorage('displaySetting')
   if (clickedDisplaySetting !== currentDisplaySetting) {
     controller.updateLocalStorage('displaySetting', clickedDisplaySetting)
     view.toggleDisplaySettingPanelClass()
